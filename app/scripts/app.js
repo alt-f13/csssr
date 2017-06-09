@@ -13,18 +13,20 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
+    'angular-loading-bar',
+    'angucomplete-alt',
   ])
-  .config(function ($routeProvider) {
+  .config(function ($routeProvider,cfpLoadingBarProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl',
         controllerAs: 'main'
       })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl',
-        controllerAs: 'about'
+      .when('/issuse/:username/:repo/:id', {
+        templateUrl: 'views/issuse.html',
+        controller: 'IssuseCtrl',
+        controllerAs: 'issuse'
       })
       .otherwise({
         redirectTo: '/'

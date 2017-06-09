@@ -11,8 +11,9 @@ angular.module('csssrApp')
   .controller('MainCtrl', function ($scope, $http) {
     //$scope.searchData="JrCs/docker-letsencrypt-nginx-proxy-companion";
     $scope.pagination = [5,15,25,40, 70, 100];
-    $scope.searchData="alt-f13/csssr";
-    $scope.searchData="Microsoft/vscode-docs";
+    //$scope.searchData="alt-f13/csssr";
+    //$scope.searchData="Microsoft/vscode-docs";
+    $scope.repos=[];
     //$scope.per_page=25;
     //$scope.page=1;
     $scope.setPagination = function(size) {
@@ -41,5 +42,12 @@ angular.module('csssrApp')
           console.error(data);
         })
     };
-
+    $scope.selectRepo = function(selected) {
+      console.log(selected.originalObject.full_name);
+      $scope.searchData=selected.originalObject.full_name;
+      $scope.getIssuse(selected.originalObject.full_name);
+    }
+    $scope.searchRepos = function(typed, timeoutPromise) {
+      return $http.get('https://api.github.com/users/'+typed+'/repos')
+    };
   });
