@@ -20,24 +20,16 @@ angular.module('csssrApp')
     $scope.setPagination = function(size) {
       $rootScope.per_page=size;
       $rootScope.page=1;
-      console.log("page size:", size);
       $scope.getIssuse($scope.searchData);
     };
     $scope.setPage = function(page) {
       $rootScope.page=page;
-      console.log("page:", page);
       $scope.getIssuse($scope.searchData);
     };
     $scope.getIssuse = function(repo) {
-      console.log(repo);
-      $rootScope.data=[];
-      if ($rootScope.per_page === undefined) $rootScope.per_page=5;
-      if (!$rootScope.page) $rootScope.page=1;
       $http.get('https://api.github.com/repos/'+repo+'/issues?per_page='+$rootScope.per_page+'&page='+$rootScope.page)
         .then(function(data) {
-          console.log(data);
           $rootScope.data=data.data;
-          console.log($rootScope.data, $location.path());
           if ($location.path() !== '/') $location.path("/");
         })
         .catch(function(data) {
@@ -45,7 +37,6 @@ angular.module('csssrApp')
         })
     };
     $scope.selectObject = function(selected) {
-      console.log(selected.originalObject.full_name);
       $scope.searchData=selected.originalObject.full_name;
       $scope.getIssuse(selected.originalObject.full_name);
     }
@@ -53,6 +44,7 @@ angular.module('csssrApp')
       $scope.searchData = str;
     }
     $scope.searchRepos = function(typed, timeoutPromise) {
-      return $http.get('https://api.github.com/users/'+typed+'/repos')
+      var _typed = typed.match(/^([a-zA-Z\d_-]*)\/?.*$/);
+      return $http.get('https://api.github.com/users/'+_typed[1]+'/repos')
     };
   });

@@ -11,7 +11,7 @@ describe('Controller: MainCtrl', function () {
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    scope = {};
+    //scope = {};
     MainCtrl = $controller('MainCtrl', {
       $scope: scope
       // place here mocked dependencies
@@ -19,9 +19,8 @@ describe('Controller: MainCtrl', function () {
   }));
 
   it('проверяем defaults', function () {
-
     //expect(MainCtrl.data.length).toBe(0);
-    //MainCtrl.getIssuse('microsoft/ace');
-    expect(MainCtrl.data.length).toBe(MainCtrl.per_page);
+    scope.getIssuse('microsoft/ace');
+    expect(scope.data.length).toBe(scope.per_page);
   });
 });

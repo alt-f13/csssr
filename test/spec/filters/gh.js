@@ -11,9 +11,10 @@ describe('Filter: gh', function () {
     gh = $filter('gh');
   }));
 
-  it('should return the input prefixed with "gh filter:"', function () {
-    var text = 'angularjs';
-    expect(gh(text)).toBe('gh filter: ' + text);
+  it('should remove https://api.github.com/repos/ from urls', function () {
+    var url = 'https://api.github.com/repos';
+    var text = 'alt-f13/';
+    expect(gh(url +"/"+text)).toBe(text);
   });
 
 });
