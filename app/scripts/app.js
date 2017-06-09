@@ -11,8 +11,6 @@
 angular
   .module('csssrApp', [
     'ngRoute',
-    'ngSanitize',
-    'ngTouch',
     'angular-loading-bar',
     'angucomplete-alt',
   ])
