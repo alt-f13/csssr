@@ -18,6 +18,7 @@ describe('Controller: IssuseCtrl', function () {
   }));
 
   it('should attach a list of awesomeThings to the scope', function () {
-    expect(IssuseCtrl.awesomeThings.length).toBe(3);
+    //var issuse = $controller('IssuseCtrl');
+    expect(scope.awesomeThings.length).toBe(3);
   });
 });
