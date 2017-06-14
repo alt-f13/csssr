@@ -49,17 +49,15 @@
           <form class="navbar-form navbar-left">
             <div class="form-group">
               <div angucomplete-alt
-                id="ex5"
                 placeholder="username/repo"
-                pause="500"
-                selected-object="selectRepo"
+                pause="200"
+                selected-object="selectObject"
                 remote-api-handler="searchRepos"
                 title-field="full_name"
-                description-field="description"
                 minlength="2"
                 input-class="form-control form-control-small"
                 match-class="highlight"
-                ng-model="searchData"
+                input-changed="inputChanged"
                 >
               </div>
             </div>

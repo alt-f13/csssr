@@ -1,9 +1,12 @@
-# csssr test
+csssr test
+==========
 
-## Build & development
+install
+-------
 
-Run `grunt` for building and `grunt serve` for preview.
-
-## Testing
-
-Running `grunt test` will run the unit tests with karma.
+```
+git clone git@github.com:alt-f13/csssr.git
+cd csssr
+npm i
+npm start
+```

@@ -42,6 +42,8 @@
   "scripts": {
     "test": "karma start test/karma.conf.js",
     "start": "grunt serve",
-    "build": "grunt build"
+    "build": "grunt build",
+    "postinstall": "bower install",
+    "deploy": "grunt build; grunt gh-pages"
   }
 }

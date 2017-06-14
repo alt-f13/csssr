@@ -2,6 +2,12 @@
 // endbower
 @import "bootstrap";
 
+.pagination {
+  margin: 0px !important;
+  vertical-align: middle;
+}
+
+
 .browsehappy {
   margin: 0.2em 0;
   background: #ccc;

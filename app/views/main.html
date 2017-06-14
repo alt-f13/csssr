@@ -1,5 +1,6 @@
 
 <nav aria-label="Page navigation">
+  страница:
   <ul class="pagination">
     <li><a href="" ng-click="setPage(1)">1</a></li>
     <li><a href="" ng-click="setPage(2)">2</a></li>
@@ -8,6 +9,32 @@
     <li><a href="" ng-click="setPage(5)">5</a></li>
   </ul>
 
+</nav>
+<ul class="list-group">
+  <li class="list-group-item clearfix" ng-repeat="item in data">
+    <a href="#!/issuse/{{item.repository_url|gh}}/{{item.number}}">
+      <div class="list-group-item-heading">
+        #{{item.number}} дата создания: {{item.created_at}}
+        <div class="pull-right">
+          автор:
+          <a ng-href="{{item.user.html_url}}" role="button" class="btn btn-default">
+            <img src="{{item.user.avatar_url}}"  width="30"> {{item.user.login}}
+          </a>
+        </div>
+        <h3>
+          {{item.title}}
+        </h3>
+      </div>
+    </a>
+    <p class="list-group-item-text">
+      {{item.body}}
+    </p>
+
+  </li>
+</ul>
+
+<nav>
+  записей на странице
   <ul class="pagination">
     <li ng-repeat="page in pagination">
       <a href=""  ng-click="setPagination(page)">{{page}}</a>
@@ -15,32 +42,3 @@
 
   </ul>
 </nav>
-<ul class="list-group">
-  <li class="list-group-item clearfix" ng-repeat="item in data">
-    <a href="#!/issuse/{{item.repository_url|gh}}/{{item.number}}">
-      <div class="list-group-item-heading">
-        #{{item.number}}
-        <h3>
-          {{item.title}}
-          <small>
-            {{item.created_at}}
-          </small>
-        </h3>
-
-      </div>
-    </a>
-    <p class="list-group-item-text">
-      <div class="pull-left">
-        <a ng-href="{{item.user.html_url}}">
-          <img src="{{item.user.avatar_url}}" alt="" class="img-responsive img-circle" width="100">
-          <h4>
-            {{item.user.login}}
-          </h4>
-        </a>
-
-      </div>
-      {{item.body}}
-    </p>
-
-  </li>
-</ul>
