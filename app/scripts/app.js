@@ -13,6 +13,7 @@ angular
     'ngRoute',
     'angular-loading-bar',
     'angucomplete-alt',
+    'hc.marked'
   ])
   .config(function ($routeProvider,cfpLoadingBarProvider) {
     $routeProvider
