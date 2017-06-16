@@ -13,7 +13,8 @@ angular
     'ngRoute',
     'angular-loading-bar',
     'angucomplete-alt',
-    'hc.marked'
+    'hc.marked',
+    'ig.linkHeaderParser'
   ])
   .config(function ($routeProvider,cfpLoadingBarProvider) {
     $routeProvider
@@ -22,7 +23,7 @@ angular
         controller: 'MainCtrl',
         controllerAs: 'main'
       })
-      .when('/issuse/:username/:repo/:id', {
+      .when('/issuse/:user/:repo/:id', {
         templateUrl: 'views/issuse.html',
         controller: 'IssuseCtrl',
         controllerAs: 'issuse'

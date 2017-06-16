@@ -11,7 +11,7 @@
 
 </nav>
 <ul class="list-group">
-  <li class="list-group-item clearfix" ng-repeat="item in data">
+  <li class="list-group-item clearfix" ng-repeat="item in page.data">
     <a href="#!/issuse/{{item.repository_url|gh}}/{{item.number}}">
       <div class="list-group-item-heading">
         #{{item.number}} дата создания: {{item.created_at}}

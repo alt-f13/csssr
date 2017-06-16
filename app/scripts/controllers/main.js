@@ -8,15 +8,15 @@
  * Controller of the csssrApp
  */
 angular.module('csssrApp')
-  .controller('MainCtrl', function ($scope, $http, $location, $rootScope) {
-    //$scope.searchData="JrCs/docker-letsencrypt-nginx-proxy-companion";
+  .controller('MainCtrl', function ($scope, $http, $location, $rootScope, github) {
+    var gh=github;
+    $scope.page=gh.page;
+    gh.getIssues('microsoft','ace')
+    //   .then(function(data) {
+    //     console.log(data);
+    //     console.log("scope", gh,$scope.page.data);
+    //   })
     $scope.pagination = [5,15,25,40, 70, 100];
-    //$scope.searchData="alt-f13/csssr";
-    //$scope.searchData="Microsoft/vscode-docs";
-    $scope.repos=[];
-    $rootScope.data=[];
-    $rootScope.per_page=5;
-    $rootScope.page=1;
     $scope.setPagination = function(size) {
       $rootScope.per_page=size;
       $rootScope.page=1;
