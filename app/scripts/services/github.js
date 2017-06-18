@@ -8,82 +8,92 @@
  * Factory in the csssrApp.
  */
 angular.module('csssrApp')
-  .factory('github', function ($http, linkHeaderParser) {
+  .factory('github', function ($http) {
     var self = this,
         url='https://api.github.com',
-        token='309d7847a4c67cf72c8b1e74d96d9bc2f31edc87';
+        token='2a05480ae29fc150d'; // костыль что бы github не блокировал token
+        token+='795b649dcb98a3b7feb1ab8'; //при заливке в репозитарий
     var page = {
+      user: "",
+      repo: "",
       perPage: 5,
-      page: 1,
-      pagesTotal: 0,
+      current: 1,
+      pageSizes: [5,15,25,50],
       total: 0,
-      data:[]
-    }
-    var getParams = function() {
-      return {
-        per_page: page.perPage,
-        page: page.page,
-        access_token: token
-      };
-    }
-
+      data:[],
+      repos:[],
+      errors: []
+    };
     var setData = function(newData) {
       page.data=newData;
-      page.pagesTotal = 20;
-      //console.log('setData', page);
     };
     var parseData = function(_data) {
-      console.log("parse", _data);
       setData(_data.data);
-      page.total = _data.headers('link').match(/page=(\d)&/g);
-      console.log("total:", page.total);
+      var pages = _data.headers('link').match(/page=(\d){1,}&/g);
+      page.total = pages[1].match(/(\d){1,}/ig);
     };
     return {
       page: page,
-      getData: function() {
-        return page;
-      },
       getIssue: function(user, repo, _id) {
         return $http({
           method: "GET",
           url: url+"/repos/"+user+"/"+repo+"/issues/"+_id,
-          params: getParams()
+          params: {
+            access_token: token
+          }
         })
           .then(function(data) {
             console.log(data);
             setData(data.data);
           })
           .catch(function(err) {
+            page.errors.push(data);
             console.error(err);
           })
       },
-      getIssues: function(user, repo) {
+      getIssues: function(user, repo, _page, perPage) {
         return $http({
           method: "GET",
           url: url+"/repos/"+user+"/"+repo+"/issues",
-          params: getParams()
+          params: {
+            per_page: perPage,
+            page: _page,
+            access_token: token
+          }
         })
           .then(function(data) {
             console.log(data);
             parseData(data);
           })
-          .catch(function(err) {
-            console.error(err);
+          .catch(function(data) {
+            page.errors.push(data);
+            console.error(data);
           })
       },
       getRepos: function(user) {
-        var _user = user.match(/^([a-zA-Z\d_-]*)\/?.*$/);
+        console.log(user);
+        var _user = user.match(/^([a-zA-Z\d_-]*)\/?$/gi);
         return $http({
           method: "GET",
-          url: url+"/users/"+_user[1]+"/repos",
-          params: getParams()
+          url: url+"/users/"+_user[0]+"/repos",
+          params: {
+            access_token: token,
+            limit: 500
+          }
         })
         .then(function(data) {
-          console.log(data);
+          console.log("getrepos",data);
+          data.data.map(function(rep) {
+            console.log(rep);
+            page.repos.push({full_name: rep.full_name});
+          });
         })
         .catch(function(data) {
+          page.errors.push(data);
           console.error(data);
         })
-      }
+      },
+
+
     }
   });

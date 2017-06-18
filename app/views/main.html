@@ -2,11 +2,9 @@
 <nav aria-label="Page navigation">
   страница:
   <ul class="pagination">
-    <li><a href="" ng-click="setPage(1)">1</a></li>
-    <li><a href="" ng-click="setPage(2)">2</a></li>
-    <li><a href="" ng-click="setPage(3)">3</a></li>
-    <li><a href="" ng-click="setPage(4)">4</a></li>
-    <li><a href="" ng-click="setPage(5)">5</a></li>
+    <li ng-repeat="page in []| range: page.total[0]">
+      <a href="" ng-click="setPage($index+1)">{{$index+1}}</a>
+    </li>
   </ul>
 
 </nav>

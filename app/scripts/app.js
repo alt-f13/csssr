@@ -13,20 +13,27 @@ angular
     'ngRoute',
     'angular-loading-bar',
     'angucomplete-alt',
-    'hc.marked',
-    'ig.linkHeaderParser'
+    'hc.marked'
   ])
   .config(function ($routeProvider,cfpLoadingBarProvider) {
     $routeProvider
-      .when('/', {
+      .when('/:user?', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl',
         controllerAs: 'main'
       })
-      .when('/issuse/:user/:repo/:id', {
+      .when('/:user/:repo/issuse/:id', {
         templateUrl: 'views/issuse.html',
         controller: 'IssuseCtrl',
         controllerAs: 'issuse'
+      })
+      .when('/:user/:repo/:page/:perPage', {
+        templateUrl: 'views/repo.html',
+        controller: 'RepoCtrl',
+        controllerAs: 'repo'
+      })
+      .when('/:user/:repo', {
+        redirectTo: '/:user/:repo/1/5'
       })
       .otherwise({
         redirectTo: '/'

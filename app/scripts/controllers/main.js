@@ -8,43 +8,40 @@
  * Controller of the csssrApp
  */
 angular.module('csssrApp')
-  .controller('MainCtrl', function ($scope, $http, $location, $rootScope, github) {
+  .controller('MainCtrl', function ($scope, $routeParams, $location, github) {
     var gh=github;
     $scope.page=gh.page;
-    gh.getIssues('microsoft','ace')
-    //   .then(function(data) {
-    //     console.log(data);
-    //     console.log("scope", gh,$scope.page.data);
-    //   })
-    $scope.pagination = [5,15,25,40, 70, 100];
-    $scope.setPagination = function(size) {
-      $rootScope.per_page=size;
-      $rootScope.page=1;
-      $scope.getIssuse($scope.searchData);
-    };
-    $scope.setPage = function(page) {
-      $rootScope.page=page;
-      $scope.getIssuse($scope.searchData);
-    };
-    $scope.getIssuse = function(repo) {
-      $http.get('https://api.github.com/repos/'+repo+'/issues?per_page='+$rootScope.per_page+'&page='+$rootScope.page)
-        .then(function(data) {
-          $rootScope.data=data.data;
-          if ($location.path() !== '/') $location.path("/");
-        })
-        .catch(function(data) {
-          console.error(data);
-        })
+    $scope.pageSizes = [5,15,25,40, 70, 100];
+    $scope.user=$routeParams.user;
+
+    $scope.inputChanged = function(str) {
+      console.log(str);
+      $scope.valInput = str;
     };
     $scope.selectObject = function(selected) {
-      $scope.searchData=selected.originalObject.full_name;
-      $scope.getIssuse(selected.originalObject.full_name);
+      $scope.valInput = selected.description.full_name;
+      $scope.search();
     }
-    $scope.inputChanged = function(str) {
-      $scope.searchData = str;
-    }
-    $scope.searchRepos = function(typed, timeoutPromise) {
-      var _typed = typed.match(/^([a-zA-Z\d_-]*)\/?.*$/);
-      return $http.get('https://api.github.com/users/'+_typed[1]+'/repos')
+    $scope.localSearch = function (str) {
+          var matches = [];
+          $scope.page.repos.forEach(function(rep) {
+            if (rep.full_name.toLowerCase().indexOf(str.toString().toLowerCase()) >= 0) {
+              matches.push(rep);
+            }
+          });
+          return matches;
     };
+    $scope.search = function(str) {
+      $location.path("/"+$scope.valInput+"/");
+    };
+    $scope.closeAlert = function(id) {
+      var index = $scope.page.errors.splice(id, 1);
+    }
+    //$scope.$broadcast('angucomplete-alt:changeInput', $location.path());
+    if (angular.isDefined($scope.user)) gh.getRepos($scope.user);
+
+
+
+
+
   });
