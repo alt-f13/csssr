@@ -1,41 +1,7 @@
-
-<nav aria-label="Page navigation">
-  страница:
-  <ul class="pagination">
-    <li ng-repeat="page in []| range: page.total[0]">
-      <a href="" ng-click="setPage($index+1)">{{$index+1}}</a>
-    </li>
-  </ul>
-
-</nav>
-<ul class="list-group">
-  <li class="list-group-item clearfix" ng-repeat="item in page.data">
-    <a href="#!/issuse/{{item.repository_url|gh}}/{{item.number}}">
-      <div class="list-group-item-heading">
-        #{{item.number}} дата создания: {{item.created_at}}
-        <div class="pull-right">
-          автор:
-          <a ng-href="{{item.user.html_url}}" role="button" class="btn btn-default">
-            <img src="{{item.user.avatar_url}}"  width="30"> {{item.user.login}}
-          </a>
-        </div>
-        <h3>
-          {{item.title}}
-        </h3>
-      </div>
-    </a>
-    <div class="list-group-item-text" marked="item.body">
-    </div>
-
-  </li>
-</ul>
-
-<nav>
-  записей на странице
-  <ul class="pagination">
-    <li ng-repeat="page in pagination">
-      <a href=""  ng-click="setPagination(page)">{{page}}</a>
-    </li>
-
-  </ul>
-</nav>
+<div class="jumbotron">
+  <h1>Hello, world!</h1>
+  <p>
+    <i class="fa-github-square fa fa-3x pull-left"></i>
+    github issuse search
+  </p>
+</div>

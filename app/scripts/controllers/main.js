@@ -15,7 +15,6 @@ angular.module('csssrApp')
     $scope.user=$routeParams.user;
 
     $scope.inputChanged = function(str) {
-      console.log(str);
       $scope.valInput = str;
     };
     $scope.selectObject = function(selected) {
@@ -25,9 +24,7 @@ angular.module('csssrApp')
     $scope.localSearch = function (str) {
           var matches = [];
           $scope.page.repos.forEach(function(rep) {
-            if (rep.full_name.toLowerCase().indexOf(str.toString().toLowerCase()) >= 0) {
-              matches.push(rep);
-            }
+            if (rep.full_name.toLowerCase().indexOf(str.toString().toLowerCase()) >= 0) matches.push(rep);
           });
           return matches;
     };
@@ -37,7 +34,6 @@ angular.module('csssrApp')
     $scope.closeAlert = function(id) {
       var index = $scope.page.errors.splice(id, 1);
     }
-    //$scope.$broadcast('angucomplete-alt:changeInput', $location.path());
     if (angular.isDefined($scope.user)) gh.getRepos($scope.user);
 
 

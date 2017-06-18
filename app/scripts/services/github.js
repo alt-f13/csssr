@@ -14,11 +14,6 @@ angular.module('csssrApp')
         token='2a05480ae29fc150d'; // костыль что бы github не блокировал token
         token+='795b649dcb98a3b7feb1ab8'; //при заливке в репозитарий
     var page = {
-      user: "",
-      repo: "",
-      perPage: 5,
-      current: 1,
-      pageSizes: [5,15,25,50],
       total: 0,
       data:[],
       repos:[],
@@ -29,8 +24,12 @@ angular.module('csssrApp')
     };
     var parseData = function(_data) {
       setData(_data.data);
-      var pages = _data.headers('link').match(/page=(\d){1,}&/g);
-      page.total = pages[1].match(/(\d){1,}/ig);
+      var links = _data.headers('link');
+      if (links) {
+        var pages=links.match(/page=(\d){1,}&/g);
+        page.total = pages[1].match(/(\d){1,}/ig);
+
+      }
     };
     return {
       page: page,
@@ -43,7 +42,6 @@ angular.module('csssrApp')
           }
         })
           .then(function(data) {
-            console.log(data);
             setData(data.data);
           })
           .catch(function(err) {
@@ -62,7 +60,6 @@ angular.module('csssrApp')
           }
         })
           .then(function(data) {
-            console.log(data);
             parseData(data);
           })
           .catch(function(data) {
@@ -71,7 +68,6 @@ angular.module('csssrApp')
           })
       },
       getRepos: function(user) {
-        console.log(user);
         var _user = user.match(/^([a-zA-Z\d_-]*)\/?$/gi);
         return $http({
           method: "GET",
@@ -82,9 +78,7 @@ angular.module('csssrApp')
           }
         })
         .then(function(data) {
-          console.log("getrepos",data);
           data.data.map(function(rep) {
-            console.log(rep);
             page.repos.push({full_name: rep.full_name});
           });
         })

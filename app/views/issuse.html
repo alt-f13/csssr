@@ -8,10 +8,8 @@
   </div>
   <div class="panel-footer">
     <div class="">
-      <a ng-href="{{page.data.user.html_url}}">
-        <img src="{{page.data.user.avatar_url}}" alt="" class="img-responsive img-circle" width="30">
-          {{page.data.user.login}}
-      </a>
+      <user item="page.data.user">
+      </user>
       <div class="pull-right">
         {{page.data.created_at}}
       </div>

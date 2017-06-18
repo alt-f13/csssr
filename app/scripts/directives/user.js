@@ -11,13 +11,10 @@ angular.module('csssrApp')
       bindings: {
         item: '<'
       },
-      template: `
-      <div>
-        автор:
-        <a ng-href="{{$ctrl.item.html_url}}" role="button" class="btn btn-default">
-          <img ng-src="{{$ctrl.item.avatar_url}}"  width="30">{{$ctrl.item.login}}
-        </a>
-      </div>
-      `
+      template: '<div>автор:\
+          |<a ng-href="{{$ctrl.item.html_url}}" role="button" class="btn btn-default">\
+          |   <img ng-src="{{$ctrl.item.avatar_url}}"  width="30">{{$ctrl.item.login}}\
+          |</a>\
+        |</div>'
     }
   );
