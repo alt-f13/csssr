@@ -17,10 +17,15 @@ angular
   ])
   .config(function ($routeProvider,cfpLoadingBarProvider) {
     $routeProvider
-      .when('/:user?', {
+      .when('/', {
         templateUrl: 'views/main.html',
-        controller: 'MainCtrl',
-        controllerAs: 'main'
+        controller: 'UserCtrl',
+        controllerAs: 'user'
+      })
+      .when('/:user', {
+        templateUrl: 'views/main.html',
+        controller: 'UserCtrl',
+        controllerAs: 'user'
       })
       .when('/:user/:repo/issuse/:id', {
         templateUrl: 'views/issuse.html',

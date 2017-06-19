@@ -58,11 +58,11 @@
                 input-class="form-control form-control-small"
                 match-class="highlight"
                 input-changed="inputChanged"
-
+                initial-value="valInput"
                 >
               </div>
             </div>
-            <button type="submit" class="btn btn-default" ng-click="search()">Поиск</button>
+            <button type="submit" class="btn btn-default" ng-click="goTo()">Поиск</button>
           </form>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
@@ -97,6 +97,7 @@
         <script src="scripts/directives/issue.js"></script>
         <script src="scripts/directives/user.js"></script>
         <script src="scripts/controllers/repo.js"></script>
+        <script src="scripts/controllers/user.js"></script>
         <!-- endbuild -->
 </body>
 </html>

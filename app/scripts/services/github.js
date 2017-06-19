@@ -1,5 +1,4 @@
 'use strict';
-
 /**
  * @ngdoc service
  * @name csssrApp.github
@@ -17,6 +16,7 @@ angular.module('csssrApp')
       total: 0,
       data:[],
       repos:[],
+      countRepos: 0,
       errors: []
     };
     var setData = function(newData) {
@@ -28,7 +28,6 @@ angular.module('csssrApp')
       if (links) {
         var pages=links.match(/page=(\d){1,}&/g);
         page.total = pages[1].match(/(\d){1,}/ig);
-
       }
     };
     return {
@@ -50,6 +49,7 @@ angular.module('csssrApp')
           })
       },
       getIssues: function(user, repo, _page, perPage) {
+        page.data=[]
         return $http({
           method: "GET",
           url: url+"/repos/"+user+"/"+repo+"/issues",
@@ -67,27 +67,38 @@ angular.module('csssrApp')
             console.error(data);
           })
       },
-      getRepos: function(user) {
+      getRepos: function(user, pageNumber) {
+        var _page = (pageNumber) ? pageNumber : 1;
         var _user = user.match(/^([a-zA-Z\d_-]*)\/?$/gi);
         return $http({
           method: "GET",
           url: url+"/users/"+_user[0]+"/repos",
           params: {
             access_token: token,
-            limit: 500
+            per_page: 100,
+            // page: _page
           }
         })
         .then(function(data) {
+          var link=data.headers('link');
           data.data.map(function(rep) {
             page.repos.push({full_name: rep.full_name});
           });
+          // if (link) {
+          //   var countRepos=link.match(/page=(\d){1,}&/gi);
+          //   page.countRepos = parseInt(countRepos[1].match(/\d{1,4}/gi));
+          //   console.log(page.countRepos);
+          //   if (page.countRepos>1) {
+          //     Array(page.countRepos).forEach(function(_page) {
+          //
+          //     })
+          //   }
+          // }
         })
         .catch(function(data) {
           page.errors.push(data);
           console.error(data);
         })
       },
-
-
     }
   });

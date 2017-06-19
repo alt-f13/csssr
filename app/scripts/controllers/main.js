@@ -12,15 +12,15 @@ angular.module('csssrApp')
     var gh=github;
     $scope.page=gh.page;
     $scope.pageSizes = [5,15,25,40, 70, 100];
-    $scope.user=$routeParams.user;
+    init();
 
     $scope.inputChanged = function(str) {
       $scope.valInput = str;
     };
     $scope.selectObject = function(selected) {
       $scope.valInput = selected.description.full_name;
-      $scope.search();
-    }
+      $scope.goTo();
+    };
     $scope.localSearch = function (str) {
           var matches = [];
           $scope.page.repos.forEach(function(rep) {
@@ -28,14 +28,20 @@ angular.module('csssrApp')
           });
           return matches;
     };
-    $scope.search = function(str) {
-      $location.path("/"+$scope.valInput+"/");
+    $scope.goTo = function() {
+      $location.path("/"+$scope.valInput);
     };
     $scope.closeAlert = function(id) {
       var index = $scope.page.errors.splice(id, 1);
-    }
-    if (angular.isDefined($scope.user)) gh.getRepos($scope.user);
-
+    };
+    function init() {
+      var path=$location.path().split('/');
+      if (!path[2]) {
+        $scope.valInput = path[1];
+      }else{
+        $scope.valInput = path[1]+"/"+path[2];
+      };
+    };
 
 
 
