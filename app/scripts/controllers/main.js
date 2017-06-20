@@ -21,28 +21,19 @@ angular.module('csssrApp')
       $scope.valInput = selected.description.full_name;
       $scope.goTo();
     };
-    // $scope.localSearch = function (str) {
-    //       var matches = [];
-    //       $scope.page.repos.forEach(function(rep) {
-    //         if (rep.full_name.toLowerCase().indexOf(str.toString().toLowerCase()) >= 0) matches.push(rep);
-    //       });
-    //       return matches;
-    // };
     $scope.goTo = function() {
       $location.path("/"+$scope.valInput);
     };
     $scope.closeAlert = function(id) {
       var index = $scope.page.errors.splice(id, 1);
     };
-    // $scope.search = function(str) {
-    //   return gh.search(str);
-    // };
-    $scope.remoteUrlRequestFn = function(str) {
-      return {
-        q: str,
-        access_token: gh.token
-      };
-   	};
+    $scope.search = function(str) {
+      if ($location.path() !== "/") {
+        return gh.search(str);
+      }else{
+        return false;
+      }
+    };
     function init() {
       var path=$location.path().split('/');
       $scope.valInput = path[1];

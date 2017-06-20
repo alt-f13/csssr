@@ -68,53 +68,20 @@ angular.module('csssrApp')
             console.error(data);
           })
       },
-      getRepos: function(user, pageNumber) {
-        var _page = (pageNumber) ? pageNumber : 1;
-        var _user = user.match(/^([a-zA-Z\d_-]*)\/?$/gi);
-        return $http({
-          method: "GET",
-          url: url+"/users/"+_user[0]+"/repos",
-          params: {
-            access_token: token,
-            per_page: 100,
-            // page: _page
-          }
-        })
-        .then(function(data) {
-          var link=data.headers('link');
-          data.data.map(function(rep) {
-            page.repos.push({full_name: rep.full_name});
-          });
-        })
-        .catch(function(data) {
-          page.errors.push(data);
-          console.error(data);
-        })
-      },
       search: function(str, tp) {
-        var _str = str.split('/');
-        console.log(_str);
         var params= {
           access_token: token,
-          per_page: 100,
-          q: "user:"+_str[0]
+          q: str
         };
-        if (_str.length > 1) params.q+=" "+_str[1];
         return $http({
           method: "GET",
           url: url+"/search/repositories",
           params: params,
         })
-        // .then(function(data) {
-        //     console.log(data);
-        //     data.data.items.map(function(rep) {
-        //       page.repos.push({full_name: rep.full_name});
-        //     });
-        //   })
-          .catch(function(data) {
-            page.errors.push(data);
-            console.error(data);
-          })
+        .catch(function(data) {
+          page.errors.push(data);
+          console.error(data);
+        })
       }
     }
   });
