@@ -11,5 +11,6 @@ angular.module('csssrApp')
   .controller('UserCtrl', function ($scope, $routeParams, github) {
     var gh=github;
     $scope.user=$routeParams.user;
-    if (angular.isDefined($scope.user)) gh.getRepos($scope.user, 1);
+    // if (angular.isDefined($scope.user)) gh.getRepos($scope.user, 1);
+    if (angular.isDefined($scope.user)) gh.search($scope.user, $scope.valInput);
   });

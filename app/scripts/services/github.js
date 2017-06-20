@@ -32,6 +32,7 @@ angular.module('csssrApp')
     };
     return {
       page: page,
+      token: token,
       getIssue: function(user, repo, _id) {
         return $http({
           method: "GET",
@@ -84,21 +85,36 @@ angular.module('csssrApp')
           data.data.map(function(rep) {
             page.repos.push({full_name: rep.full_name});
           });
-          // if (link) {
-          //   var countRepos=link.match(/page=(\d){1,}&/gi);
-          //   page.countRepos = parseInt(countRepos[1].match(/\d{1,4}/gi));
-          //   console.log(page.countRepos);
-          //   if (page.countRepos>1) {
-          //     Array(page.countRepos).forEach(function(_page) {
-          //
-          //     })
-          //   }
-          // }
         })
         .catch(function(data) {
           page.errors.push(data);
           console.error(data);
         })
       },
+      search: function(str, tp) {
+        var _str = str.split('/');
+        console.log(_str);
+        var params= {
+          access_token: token,
+          per_page: 100,
+          q: "user:"+_str[0]
+        };
+        if (_str.length > 1) params.q+=" "+_str[1];
+        return $http({
+          method: "GET",
+          url: url+"/search/repositories",
+          params: params,
+        })
+        // .then(function(data) {
+        //     console.log(data);
+        //     data.data.items.map(function(rep) {
+        //       page.repos.push({full_name: rep.full_name});
+        //     });
+        //   })
+          .catch(function(data) {
+            page.errors.push(data);
+            console.error(data);
+          })
+      }
     }
   });
